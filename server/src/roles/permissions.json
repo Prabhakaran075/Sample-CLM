@@ -1,0 +1,27 @@
+{
+  "SUPER_ADMIN": [
+    "admin:monitor",
+    "tenants:manage_all"
+  ],
+  "ORG_ADMIN": [
+    "contracts:create",
+    "contracts:read",
+    "contracts:update",
+    "contracts:delete",
+    "users:invite",
+    "users:manage",
+    "billing:manage"
+  ],
+  "CONTRIBUTOR": [
+    "contracts:create",
+    "contracts:read",
+    "contracts:update"
+  ],
+  "LEGAL": [
+    "contracts:read",
+    "workflows:approve"
+  ],
+  "VIEWER": [
+    "contracts:read"
+  ]
+}
