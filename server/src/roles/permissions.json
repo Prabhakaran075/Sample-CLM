@@ -1,7 +1,9 @@
 {
   "SUPER_ADMIN": [
     "admin:monitor",
-    "tenants:manage_all"
+    "tenants:manage_all",
+    "marketplace:manage",
+    "governance:manage"
   ],
   "ORG_ADMIN": [
     "contracts:create",
@@ -10,7 +12,12 @@
     "contracts:delete",
     "users:invite",
     "users:manage",
-    "billing:manage"
+    "billing:manage",
+    "templates:create",
+    "integrations:manage",
+    "plugins:manage",
+    "providers:manage",
+    "agents:manage"
   ],
   "CONTRIBUTOR": [
     "contracts:create",

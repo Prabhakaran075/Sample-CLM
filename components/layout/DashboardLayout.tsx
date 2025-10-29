@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import Sidebar from './Sidebar';
 import Header from './Header';
@@ -8,6 +7,13 @@ import SettingsPage from '../../pages/SettingsPage';
 import ApprovalsPage from '../../pages/ApprovalsPage';
 import AnalyticsPage from '../../pages/AnalyticsPage';
 import AdminPage from '../../pages/AdminPage';
+import TemplateLibraryPage from '../../pages/TemplateLibraryPage';
+import AutomationHubPage from '../../pages/AutomationHubPage';
+import PluginMarketplacePage from '../../pages/PluginMarketplacePage';
+import IntegrationHubPage from '../../pages/IntegrationHubPage';
+import AgentsPage from '../../pages/AgentsPage';
+import AIGovernancePage from '../../pages/AIGovernancePage';
+import NegotiationSimulatorPage from '../../pages/NegotiationSimulatorPage';
 import Assistant from '../assistant/Assistant';
 import UpgradeModal from '../modals/UpgradeModal';
 import type { Page } from '../../App';
@@ -76,8 +82,22 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({
         return <ApprovalsPage />;
       case 'analytics':
         return <AnalyticsPage />;
+      case 'templates':
+        return <TemplateLibraryPage />;
+      case 'automations':
+        return <AutomationHubPage />;
+      case 'plugins':
+        return <PluginMarketplacePage />;
+      case 'integrations':
+        return <IntegrationHubPage />;
+      case 'agents':
+        return <AgentsPage />;
+      case 'negotiation':
+        return <NegotiationSimulatorPage />;
       case 'admin':
         return <AdminPage />;
+      case 'governance':
+        return <AIGovernancePage />;
       case 'settings':
         return <SettingsPage userRole={user.role} />;
       default:

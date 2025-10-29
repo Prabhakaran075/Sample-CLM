@@ -1,4 +1,5 @@
-import { Request, Response } from 'express';
+
+import express from 'express';
 import jwt from 'jsonwebtoken';
 
 // Mocks - replace with actual database logic
@@ -7,7 +8,7 @@ import { UserRole } from '../models/User';
 // @desc    Authenticate user & get token (mock implementation)
 // @route   POST /api/auth/login
 // @access  Public
-export const loginUser = (req: Request, res: Response) => {
+export const loginUser = (req: express.Request, res: express.Response) => {
   const { email, password } = req.body;
 
   // TODO: Replace this with a real database lookup and password check (e.g., using bcrypt)
@@ -24,7 +25,7 @@ export const loginUser = (req: Request, res: Response) => {
 
     const token = jwt.sign(
       { id: mockUser.id, tenantId: mockUser.activeTenantId, role: mockUser.role },
-      process.env.JWT_SECRET!,
+      process.env.JWT_SECRET as string,
       { expiresIn: process.env.JWT_EXPIRES_IN || '1h' }
     );
 

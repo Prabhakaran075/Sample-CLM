@@ -1,10 +1,9 @@
-
 import React, { useState } from 'react';
 import LoginPage from './pages/LoginPage';
 import DashboardLayout from './components/layout/DashboardLayout';
 import type { Contract } from './types';
 
-export type Page = 'dashboard' | 'contracts' | 'approvals' | 'analytics' | 'settings' | 'admin';
+export type Page = 'dashboard' | 'contracts' | 'approvals' | 'analytics' | 'settings' | 'admin' | 'templates' | 'automations' | 'plugins' | 'integrations' | 'agents' | 'governance' | 'negotiation';
 
 const App: React.FC = () => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);

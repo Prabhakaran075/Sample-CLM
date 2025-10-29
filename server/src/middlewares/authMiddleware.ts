@@ -1,4 +1,5 @@
-import { Request, Response, NextFunction } from 'express';
+
+import express from 'express';
 import jwt from 'jsonwebtoken';
 import User from '../models/User';
 
@@ -12,7 +13,7 @@ declare global {
   }
 }
 
-const protect = async (req: Request, res: Response, next: NextFunction) => {
+const protect = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
   let token;
 
   if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {

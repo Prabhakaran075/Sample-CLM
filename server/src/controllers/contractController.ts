@@ -1,4 +1,5 @@
-import { Request, Response } from 'express';
+
+import express from 'express';
 // import Contract from '../models/Contract'; // To be used when connected to a real DB
 
 // Mock data mirroring the frontend for now
@@ -28,7 +29,7 @@ const mockContracts = [
 // @desc    Get all contracts for a tenant
 // @route   GET /api/contracts
 // @access  Private
-export const getContracts = async (req: Request, res: Response) => {
+export const getContracts = async (req: express.Request, res: express.Response) => {
   try {
     // TODO: Replace with real database query filtered by tenantId from auth middleware
     // const contracts = await Contract.find({ tenantId: req.tenantId });
@@ -45,7 +46,7 @@ export const getContracts = async (req: Request, res: Response) => {
 // @desc    Get a single contract by ID
 // @route   GET /api/contracts/:id
 // @access  Private
-export const getContractById = async (req: Request, res: Response) => {
+export const getContractById = async (req: express.Request, res: express.Response) => {
   try {
     // TODO: Replace with real database query
     // const contract = await Contract.findOne({ _id: req.params.id, tenantId: req.tenantId });

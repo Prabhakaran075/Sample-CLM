@@ -1,4 +1,5 @@
-import { Request, Response } from 'express';
+
+import express from 'express';
 // import Stripe from 'stripe';
 
 // const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
@@ -7,7 +8,7 @@ import { Request, Response } from 'express';
  * Handles incoming webhooks from Stripe to manage subscription events.
  * @route POST /api/billing/webhooks
  */
-export const handleStripeWebhook = async (req: Request, res: Response) => {
+export const handleStripeWebhook = async (req: express.Request, res: express.Response) => {
   const signature = req.headers['stripe-signature'];
   
   // TODO: Enterprise Enhancement
@@ -23,7 +24,7 @@ export const handleStripeWebhook = async (req: Request, res: Response) => {
  * Creates a Stripe Checkout session for a tenant to upgrade their plan.
  * @route POST /api/billing/create-checkout-session
  */
-export const createCheckoutSession = async (req: Request, res: Response) => {
+export const createCheckoutSession = async (req: express.Request, res: express.Response) => {
   // TODO: Enterprise Enhancement
   // - Get tenantId from the authenticated user.
   // - Create a Stripe Checkout session with line items for the desired plan.
@@ -37,7 +38,7 @@ export const createCheckoutSession = async (req: Request, res: Response) => {
  * Redirects the user to the Stripe Customer Portal to manage their subscription.
  * @route POST /api/billing/customer-portal
  */
-export const createCustomerPortalSession = async (req: Request, res: Response) => {
+export const createCustomerPortalSession = async (req: express.Request, res: express.Response) => {
     // TODO: Enterprise Enhancement
     console.log('// TODO: Create Stripe Customer Portal session');
     res.status(200).json({ portalUrl: 'https://billing.stripe.com/p/session/mock_portal_url' });

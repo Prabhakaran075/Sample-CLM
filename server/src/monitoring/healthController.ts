@@ -1,11 +1,12 @@
-import { Request, Response } from 'express';
+
+import express from 'express';
 import mongoose from 'mongoose';
 
 /**
  * Checks the health of the application, including the database connection.
  * @route GET /api/health
  */
-export const checkHealth = (req: Request, res: Response) => {
+export const checkHealth = (req: express.Request, res: express.Response) => {
   const healthStatus = {
     status: 'ok',
     message: 'Server is healthy',

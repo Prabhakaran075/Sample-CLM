@@ -1,4 +1,3 @@
-
 export enum ContractStatus {
   DRAFT = 'Draft',
   IN_REVIEW = 'In Review',
@@ -110,6 +109,80 @@ export interface Activity {
 export interface AssistantMessage {
     id: string;
     sender: 'user' | 'ai';
+    text: string;
+    timestamp: string;
+}
+
+export interface Template {
+    id: string;
+    title: string;
+    description: string;
+    category: 'Sales' | 'Legal' | 'HR' | 'Finance';
+    usageCount: number;
+    author: string;
+}
+
+export interface AutomationRecipe {
+    id: string;
+    title: string;
+    description: string;
+    trigger: string;
+    author: string;
+    isEnabled: boolean;
+}
+
+export interface Plugin {
+    id: string;
+    name: string;
+    author: string;
+    description: string;
+    category: 'Workflow' | 'Insights' | 'Integrations' | 'AI Tools';
+    version: string;
+    isInstalled: boolean;
+}
+
+export interface AIProvider {
+    id: string;
+    name: 'OpenAI' | 'Anthropic' | 'Google Gemini' | 'Custom';
+    apiKeyStatus: 'Connected' | 'Not Connected';
+    model: string;
+}
+
+export interface PartnerIntegration {
+    id: string;
+    name: 'Salesforce' | 'Slack' | 'Microsoft Teams' | 'DocuSign' | 'Google Drive' | 'Zapier';
+    category: 'CRM' | 'Communication' | 'eSign' | 'Storage' | 'Automation';
+    description: string;
+    isConnected: boolean;
+    logoUrl: string;
+}
+
+// Phase 7 Types
+export type AgentStatus = 'Idle' | 'Active' | 'Paused' | 'Completed' | 'Error';
+export type AgentType = 'Renewal' | 'Compliance' | 'Negotiation';
+
+export interface Agent {
+    id: string;
+    name: string;
+    type: AgentType;
+    status: AgentStatus;
+    assignedContractId: string;
+    assignedContractTitle: string;
+    lastActivity: string;
+    progress: number; // 0-100
+}
+
+export interface AIPolicy {
+    id: string;
+    name: string;
+    description: string;
+    jurisdiction: 'Global' | 'EU' | 'US';
+    isEnabled: boolean;
+}
+
+export interface NegotiationMessage {
+    id: string;
+    sender: 'Buyer' | 'Vendor' | 'System';
     text: string;
     timestamp: string;
 }

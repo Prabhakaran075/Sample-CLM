@@ -16,7 +16,9 @@
     "mongoose": "^8.19.2",
     "cors": "^2.8.5",
     "express": "^5.1.0",
-    "jsonwebtoken": "^9.0.2"
+    "jsonwebtoken": "^9.0.2",
+    "crypto": "^1.0.1",
+    "@google/genai": "^1.27.0"
   },
   "devDependencies": {
     "@types/node": "^22.14.0",

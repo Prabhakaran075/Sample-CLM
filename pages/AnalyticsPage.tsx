@@ -1,5 +1,7 @@
+
 import React from 'react';
 import { BarChart, Bar, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from 'recharts';
+import { SearchIcon } from '../components/icons/IconComponents';
 
 const contractsByStatusData = [
   { name: 'Draft', value: 12 },
@@ -97,10 +99,24 @@ const AnalyticsPage: React.FC = () => {
                 </ResponsiveContainer>
             </div>
         </div>
-         <div className="bg-white p-6 rounded-lg shadow">
-            <h3 className="text-lg font-semibold text-gray-800 mb-4">Top Counterparties by Volume</h3>
-            <p className="text-center text-gray-500 mt-16">Chart coming soon...</p>
-        </div>
+        <div className="bg-white p-6 rounded-lg shadow flex flex-col">
+          <h3 className="text-lg font-semibold text-gray-800">Contract Knowledge Graph</h3>
+          <p className="text-sm text-gray-500 mt-1">Ask questions about relationships between contracts, parties, and clauses.</p>
+          <div className="mt-4 relative">
+             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                  <SearchIcon className="h-5 w-5 text-gray-400" />
+              </div>
+              <input
+                  type="text"
+                  placeholder='e.g., "Show all contracts expiring next quarter with Vendor X"'
+                  className="block w-full bg-gray-50 border border-gray-300 rounded-md py-2 pl-10 pr-3 text-sm focus:outline-none focus:border-primary-500 focus:ring-primary-500"
+              />
+          </div>
+          <div className="flex-grow mt-4 border border-dashed rounded-lg flex items-center justify-center text-gray-400">
+             {/* TODO: Implement D3.js visualization */}
+             Graph Visualization Placeholder
+          </div>
+      </div>
       </div>
     </div>
   );

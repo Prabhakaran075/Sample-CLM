@@ -1,6 +1,5 @@
-
 import React from 'react';
-import { DashboardIcon, ContractsIcon, SettingsIcon, LogoIcon, ApprovalsIcon, AnalyticsIcon, ShieldCheckIcon } from '../icons/IconComponents';
+import { DashboardIcon, ContractsIcon, SettingsIcon, LogoIcon, ApprovalsIcon, AnalyticsIcon, ShieldCheckIcon, RectangleStackIcon, BoltIcon, PuzzlePieceIcon, GlobeAltIcon, CpuChipIcon, ScaleIcon, ChatBubbleBottomCenterTextIcon } from '../icons/IconComponents';
 import type { Page } from '../../App';
 import { UserRole } from '../../types';
 
@@ -43,7 +42,18 @@ const Sidebar: React.FC<SidebarProps> = ({ currentPage, setCurrentPage, userRole
     { id: 'contracts', label: 'Contracts', icon: <ContractsIcon className="w-5 h-5" /> },
     { id: 'approvals', label: 'Approvals', icon: <ApprovalsIcon className="w-5 h-5" />, badge: 3 },
     { id: 'analytics', label: 'Analytics', icon: <AnalyticsIcon className="w-5 h-5" /> },
-    { id: 'settings', label: 'Settings', icon: <SettingsIcon className="w-5 h-5" /> },
+  ];
+  
+  const intelligenceItems: { id: Page; label: string; icon: React.ReactElement }[] = [
+    { id: 'agents', label: 'Autonomous Agents', icon: <CpuChipIcon className="w-5 h-5" /> },
+    { id: 'negotiation', label: 'Negotiation Simulator', icon: <ChatBubbleBottomCenterTextIcon className="w-5 h-5" /> },
+  ];
+
+  const marketplaceItems: { id: Page; label: string; icon: React.ReactElement }[] = [
+    { id: 'templates', label: 'Template Library', icon: <RectangleStackIcon className="w-5 h-5" /> },
+    { id: 'automations', label: 'Automation Hub', icon: <BoltIcon className="w-5 h-5" /> },
+    { id: 'plugins', label: 'Plugin Marketplace', icon: <PuzzlePieceIcon className="w-5 h-5" /> },
+    { id: 'integrations', label: 'Integration Hub', icon: <GlobeAltIcon className="w-5 h-5" /> },
   ];
 
   return (
@@ -52,7 +62,7 @@ const Sidebar: React.FC<SidebarProps> = ({ currentPage, setCurrentPage, userRole
          <LogoIcon className="w-8 h-8 text-primary-600" />
          <h1 className="ml-2 text-xl font-bold text-gray-800">Simple CLM</h1>
       </div>
-      <nav className="flex-1 px-4 py-6 space-y-2">
+      <nav className="flex-1 px-4 py-6 space-y-2 overflow-y-auto">
         {navItems.map((item) => (
           <NavLink
             key={item.id}
@@ -63,26 +73,66 @@ const Sidebar: React.FC<SidebarProps> = ({ currentPage, setCurrentPage, userRole
             badge={item.badge}
           />
         ))}
+
+        <div className="pt-4 mt-2 border-t">
+          <p className="px-4 text-xs font-semibold text-gray-400 uppercase tracking-wider">Intelligence</p>
+          <div className="mt-2 space-y-2">
+            {intelligenceItems.map((item) => (
+              <NavLink
+                key={item.id}
+                icon={item.icon}
+                label={item.label}
+                isActive={currentPage === item.id}
+                onClick={() => setCurrentPage(item.id)}
+              />
+            ))}
+          </div>
+        </div>
+
+        <div className="pt-4 mt-2 border-t">
+          <p className="px-4 text-xs font-semibold text-gray-400 uppercase tracking-wider">Ecosystem</p>
+          <div className="mt-2 space-y-2">
+            {marketplaceItems.map((item) => (
+              <NavLink
+                key={item.id}
+                icon={item.icon}
+                label={item.label}
+                isActive={currentPage === item.id}
+                onClick={() => setCurrentPage(item.id)}
+              />
+            ))}
+          </div>
+        </div>
+        
         {userRole === UserRole.SUPER_ADMIN && (
-            <div className="pt-4 mt-4 border-t">
-                <NavLink
-                    key="admin"
-                    icon={<ShieldCheckIcon className="w-5 h-5" />}
-                    label="Admin Panel"
-                    isActive={currentPage === 'admin'}
-                    onClick={() => setCurrentPage('admin')}
-                />
+            <div className="pt-4 mt-2 border-t">
+                 <p className="px-4 text-xs font-semibold text-gray-400 uppercase tracking-wider">Admin</p>
+                 <div className="mt-2 space-y-2">
+                    <NavLink
+                        key="admin"
+                        icon={<ShieldCheckIcon className="w-5 h-5" />}
+                        label="Monitoring"
+                        isActive={currentPage === 'admin'}
+                        onClick={() => setCurrentPage('admin')}
+                    />
+                    <NavLink
+                        key="governance"
+                        icon={<ScaleIcon className="w-5 h-5" />}
+                        label="AI Governance"
+                        isActive={currentPage === 'governance'}
+                        onClick={() => setCurrentPage('governance')}
+                    />
+                </div>
             </div>
         )}
       </nav>
-      <div className="px-4 py-4 border-t border-gray-200">
-         <div className="p-4 rounded-lg bg-primary-50 text-center">
-             <h3 className="font-bold text-primary-800">Upgrade to Pro</h3>
-             <p className="text-xs text-primary-700 mt-1">Unlock all features and get unlimited contracts.</p>
-             <button className="mt-3 w-full bg-primary-600 text-white text-sm font-semibold py-2 px-4 rounded-lg hover:bg-primary-700 transition-colors">
-                 Upgrade
-             </button>
-         </div>
+       <div className="px-4 py-4 border-t border-gray-200">
+         <NavLink
+            icon={<SettingsIcon className="w-5 h-5" />}
+            label="Settings"
+            isActive={currentPage === 'settings'}
+            onClick={() => setCurrentPage('settings')}
+          />
       </div>
     </aside>
   );
