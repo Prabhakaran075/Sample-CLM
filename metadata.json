@@ -1,5 +1,8 @@
 {
   "name": "Simple CLM - AI-Powered Contract Lifecycle Management",
   "description": "A multi-tenant SaaS web application to upload, create, and manage contracts, track approval workflows, sign electronically, and view insights & renewal alerts.",
-  "requestFramePermissions": []
+  "requestFramePermissions": [
+    "microphone",
+    "camera"
+  ]
 }

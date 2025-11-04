@@ -1,4 +1,5 @@
-import express, { Express, Request, Response, NextFunction } from 'express';
+
+import express, { Express } from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
 import connectDB from './utils/db';
@@ -25,6 +26,7 @@ import negotiationRoutes from './routes/negotiationRoutes';
 // Load environment variables
 dotenv.config();
 
+// FIX: Changed app type to Express to match default import and resolve overload errors.
 const app: Express = express();
 const PORT = process.env.PORT || 8080;
 

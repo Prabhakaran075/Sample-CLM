@@ -1,3 +1,4 @@
+
 import React, { useState, useRef, useEffect } from 'react';
 import type { NegotiationMessage } from '../types';
 import { CpuChipIcon, CheckCircleIcon } from '../components/icons/IconComponents';
@@ -17,9 +18,21 @@ const NegotiationSimulatorPage: React.FC = () => {
   const handleStartSimulation = () => {
     setIsSimulating(true);
     setMessages([
-        { id: 'm1', sender: 'System', text: 'Simulation started. Buyer will make the first proposal.', timestamp: new Date().toLocaleTimeString() }
+        { id: 'm1', sender: 'System', text: 'Simulation started. AI agents are negotiating using deep reasoning (Thinking Mode). This may take a moment...', timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) }
     ]);
-    // TODO: Call backend API /api/negotiation/simulate
+    
+    // This would call a backend API /api/negotiation/simulate, which uses gemini-2.5-pro with thinkingBudget.
+    setTimeout(() => {
+        const mockTranscript: NegotiationMessage[] = [
+            { id: 'm2', sender: 'Buyer', text: 'We propose a price of $95 per user per month based on the 100-user license for a 3-year term.', timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) },
+            { id: 'm3', sender: 'Vendor', text: 'Thank you for the proposal. Given the included SLA and premium support package, our standard rate is $120. However, for a 3-year term commitment, we can offer a discounted rate of $110.', timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) },
+            { id: 'm4', sender: 'Buyer', text: 'We appreciate the discount. Our budget is capped at $100 per user. Could we meet at $100 if we prepay for the first year?', timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) },
+            { id: 'm5', sender: 'Vendor', text: 'Prepayment for the first year is an interesting option. We can agree to $100 per user if the contract also includes an auto-renewal clause with a 3% annual price increase.', timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) },
+            { id: 'm6', sender: 'System', text: 'Negotiation has reached a potential agreement.', timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) },
+        ];
+        setMessages(prev => [...prev, ...mockTranscript]);
+        setIsSimulating(false);
+    }, 2500);
   };
 
   return (

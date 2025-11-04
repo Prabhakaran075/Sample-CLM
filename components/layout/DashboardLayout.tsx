@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import Sidebar from './Sidebar';
 import Header from './Header';
@@ -17,7 +18,7 @@ import NegotiationSimulatorPage from '../../pages/NegotiationSimulatorPage';
 import ContractEditPage from '../../pages/ContractEditPage';
 import CreateRecipePage from '../../pages/CreateRecipePage';
 import Assistant from '../assistant/Assistant';
-import UpgradeModal from '../modals/UpgradeModal';
+import NewContractModal from '../modals/NewContractModal';
 import type { Page } from '../../App';
 import type { User, Contract, Tenant } from '../../types';
 import { UserRole } from '../../types';
@@ -31,8 +32,10 @@ interface DashboardLayoutProps {
   contractToEdit: Contract | null;
   onEditContract: (contract: Contract) => void;
   onSaveContract: (contract: Contract) => void;
-  isUpgradeModalOpen: boolean;
-  setUpgradeModalOpen: (isOpen: boolean) => void;
+  isNewContractModalOpen: boolean;
+  setNewContractModalOpen: (isOpen: boolean) => void;
+  contracts: Contract[];
+  onAddNewContract: (data: {title: string, parties: string[], expiryDate: string, documentUrl?: string}) => void;
 }
 
 const mockTenants: Record<string, Tenant> = {
@@ -59,8 +62,10 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({
     contractToEdit,
     onEditContract,
     onSaveContract,
-    isUpgradeModalOpen,
-    setUpgradeModalOpen
+    isNewContractModalOpen,
+    setNewContractModalOpen,
+    contracts,
+    onAddNewContract,
 }) => {
   const [user, setUser] = useState<User>(initialUser);
 
@@ -85,7 +90,8 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({
             selectedContract={selectedContract}
             setSelectedContract={setSelectedContract}
             onEditContract={onEditContract}
-            openUpgradeModal={() => setUpgradeModalOpen(true)}
+            openNewContractModal={() => setNewContractModalOpen(true)}
+            contracts={contracts}
         />;
       case 'approvals':
         return <ApprovalsPage />;
@@ -134,7 +140,7 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({
         </main>
       </div>
       <Assistant contractContext={selectedContract} />
-      <UpgradeModal isOpen={isUpgradeModalOpen} onClose={() => setUpgradeModalOpen(false)} />
+      <NewContractModal isOpen={isNewContractModalOpen} onClose={() => setNewContractModalOpen(false)} onAddNewContract={onAddNewContract} />
     </div>
   );
 };

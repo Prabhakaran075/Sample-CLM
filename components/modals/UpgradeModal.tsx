@@ -18,7 +18,7 @@ const UpgradeModal: React.FC<UpgradeModalProps> = ({ isOpen, onClose }) => {
         </button>
         <div className="text-center">
             <h2 id="upgrade-title" className="text-2xl font-bold text-gray-900">Upgrade to Pro</h2>
-            <p className="mt-2 text-gray-600">You've hit the limit for new contracts on the Free plan.</p>
+            <p className="mt-2 text-gray-600">Unlock advanced features and remove limits.</p>
         </div>
         
         <div className="mt-6 border rounded-lg p-6 bg-primary-50 border-primary-200">

@@ -1,3 +1,4 @@
+
 // FIX: Import specific types from Express for proper type checking.
 import { Request, Response } from 'express';
 // import Contract from '../models/Contract'; // To be used when connected to a real DB

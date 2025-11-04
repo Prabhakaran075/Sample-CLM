@@ -1,3 +1,4 @@
+
 // FIX: Import specific types from Express for proper type checking.
 import { Request, Response, NextFunction } from 'express';
 // In a real implementation, you might use a graph database library like neo4j-driver.

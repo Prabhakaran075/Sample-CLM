@@ -1,5 +1,7 @@
+
 // FIX: Import specific types from Express for proper type checking.
-import { Request, Response, NextFunction } from 'express';
+// FIX: Changed to namespace import to resolve type conflicts.
+import * as express from 'express';
 import Template from '../templates/templateModel';
 
 /**
@@ -12,7 +14,7 @@ class TemplateController {
    * @route   GET /api/templates
    * @access  Private
    */
-  public static async getTemplates(req: Request, res: Response, next: NextFunction): Promise<void> {
+  public static async getTemplates(req: express.Request, res: express.Response, next: express.NextFunction): Promise<void> {
     try {
       // In a real multi-tenant app, you would filter by req.tenantId:
       // const templates = await Template.find({ $or: [{ tenantId: null }, { tenantId: req.tenantId }] }).sort({ createdAt: -1 });
@@ -28,7 +30,7 @@ class TemplateController {
    * @route   POST /api/templates
    * @access  Private (Org Admin)
    */
-  public static async createTemplate(req: Request, res: Response, next: NextFunction): Promise<void> {
+  public static async createTemplate(req: express.Request, res: express.Response, next: express.NextFunction): Promise<void> {
       try {
           const { title, description, category, content, author } = req.body;
           // In a multi-tenant app, you would associate this with the tenant:
@@ -50,7 +52,7 @@ class TemplateController {
    * @route   GET /api/templates/:id
    * @access  Private
    */
-  public static async getTemplateById(req: Request, res: Response, next: NextFunction): Promise<void> {
+  public static async getTemplateById(req: express.Request, res: express.Response, next: express.NextFunction): Promise<void> {
       try {
           const template = await Template.findById(req.params.id);
           if (!template) {
@@ -68,7 +70,7 @@ class TemplateController {
    * @route   POST /api/templates/:id
    * @access  Private
    */
-  public static async useTemplate(req: Request, res: Response, next: NextFunction): Promise<void> {
+  public static async useTemplate(req: express.Request, res: express.Response, next: express.NextFunction): Promise<void> {
     try {
         const template = await Template.findById(req.params.id);
         if (!template) {
@@ -92,7 +94,7 @@ class TemplateController {
    * @route   DELETE /api/templates/:id
    * @access  Private (Org Admin)
    */
-  public static async deleteTemplate(req: Request, res: Response, next: NextFunction): Promise<void> {
+  public static async deleteTemplate(req: express.Request, res: express.Response, next: express.NextFunction): Promise<void> {
     try {
         const template = await Template.findByIdAndDelete(req.params.id);
         if (!template) {

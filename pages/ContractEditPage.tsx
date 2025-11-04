@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import type { Contract } from '../types';
 import { ContractStatus } from '../types';
@@ -11,6 +12,9 @@ interface ContractEditPageProps {
 
 const ContractEditPage: React.FC<ContractEditPageProps> = ({ contract, onSave, onCancel }) => {
   const [formData, setFormData] = useState<Contract>(contract);
+  const [clauseText, setClauseText] = useState("This Agreement shall commence on the Effective Date and continue for a period of three (3) years");
+  const [isSuggesting, setIsSuggesting] = useState(false);
+  const [aiSuggestionResult, setAiSuggestionResult] = useState('');
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -19,6 +23,40 @@ const ContractEditPage: React.FC<ContractEditPageProps> = ({ contract, onSave, o
   
   const handleSave = () => {
     onSave({ ...formData, version: formData.version + 1, lastUpdated: new Date().toISOString().split('T')[0] });
+  };
+
+  const handleAutocomplete = async () => {
+    if (!clauseText || isSuggesting) return;
+    setIsSuggesting(true);
+    try {
+        // This would call an endpoint using gemini-2.5-flash-lite
+        console.log("Calling autocomplete API...");
+        setTimeout(() => {
+            const suggestion = ", unless terminated earlier in accordance with the terms herein. This agreement will automatically renew for successive one (1) year periods unless a party provides written notice of non-renewal at least sixty (60) days prior to the end of the then-current term.";
+            setClauseText(prev => prev + suggestion);
+            setIsSuggesting(false);
+        }, 800);
+    } catch (error) {
+        console.error("Autocomplete failed:", error);
+        setIsSuggesting(false);
+    }
+  };
+
+  const handleAiAction = (action: string) => {
+    setAiSuggestionResult(`Calling AI for "${action}"...`);
+    // This would call an endpoint using gemini-2.5-pro for complex tasks
+    setTimeout(() => {
+       switch(action) {
+           case "Risk Mitigation":
+               setAiSuggestionResult("Suggestion: Add a 'Limitation of Liability' clause capping liability at the total contract value to mitigate financial risk.");
+               break;
+           case "Generate Summary":
+               setAiSuggestionResult("Summary: A 3-year service agreement with auto-renewal, standard payment terms, and confidentiality obligations.");
+               break;
+           default:
+               setAiSuggestionResult("AI analysis complete. See generated report for details.");
+       }
+    }, 1500);
   };
 
   return (
@@ -68,10 +106,18 @@ const ContractEditPage: React.FC<ContractEditPageProps> = ({ contract, onSave, o
                     </div>
                 </div>
                  <div className="border-t pt-6">
-                    <h3 className="text-lg font-semibold text-gray-800">Clause Editor</h3>
-                    <p className="text-sm text-gray-500 mt-1">A rich text editor like React Quill would be ideal here.</p>
+                    <div className="flex justify-between items-center">
+                        <div>
+                            <h3 className="text-lg font-semibold text-gray-800">Clause Editor</h3>
+                            <p className="text-sm text-gray-500 mt-1">A rich text editor like React Quill would be ideal here.</p>
+                        </div>
+                         <button onClick={handleAutocomplete} disabled={isSuggesting} className="flex items-center text-sm font-semibold bg-primary-50 text-primary-700 py-1.5 px-3 rounded-lg hover:bg-primary-100 disabled:bg-gray-200">
+                             <SparklesIcon className="w-4 h-4 mr-2"/>
+                            {isSuggesting ? 'Thinking...' : 'Suggest Completion'}
+                        </button>
+                    </div>
                     <div className="mt-4">
-                        <textarea rows={15} className="block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 sm:text-sm" defaultValue="This Agreement shall commence on the Effective Date and continue for a period of three (3) years..."></textarea>
+                        <textarea rows={15} className="block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 sm:text-sm" value={clauseText} onChange={e => setClauseText(e.target.value)}></textarea>
                     </div>
                 </div>
             </div>
@@ -85,11 +131,17 @@ const ContractEditPage: React.FC<ContractEditPageProps> = ({ contract, onSave, o
                     </h3>
                     <p className="text-sm text-gray-500 mt-1">Use AI to improve this contract.</p>
                     <div className="mt-4 space-y-2 border-t pt-4">
-                        <button onClick={() => alert("AI is suggesting risk mitigation clauses...")} className="w-full text-left text-sm font-medium text-gray-700 p-2 rounded-md hover:bg-gray-100">Suggest Risk Mitigation</button>
-                        <button onClick={() => alert("AI is generating a new summary...")} className="w-full text-left text-sm font-medium text-gray-700 p-2 rounded-md hover:bg-gray-100">Generate Summary</button>
-                        <button onClick={() => alert("AI is comparing with the previous version...")} className="w-full text-left text-sm font-medium text-gray-700 p-2 rounded-md hover:bg-gray-100">Compare with Previous Version</button>
-                         <button onClick={() => alert("AI is checking for missing clauses...")} className="w-full text-left text-sm font-medium text-gray-700 p-2 rounded-md hover:bg-gray-100">Check for Missing Clauses</button>
+                        <button onClick={() => handleAiAction("Risk Mitigation")} className="w-full text-left text-sm font-medium text-gray-700 p-2 rounded-md hover:bg-gray-100">Suggest Risk Mitigation</button>
+                        <button onClick={() => handleAiAction("Generate Summary")} className="w-full text-left text-sm font-medium text-gray-700 p-2 rounded-md hover:bg-gray-100">Generate Summary</button>
+                        <button onClick={() => handleAiAction("Compare Versions")} className="w-full text-left text-sm font-medium text-gray-700 p-2 rounded-md hover:bg-gray-100">Compare with Previous Version</button>
+                         <button onClick={() => handleAiAction("Check Clauses")} className="w-full text-left text-sm font-medium text-gray-700 p-2 rounded-md hover:bg-gray-100">Check for Missing Clauses</button>
                     </div>
+                     {aiSuggestionResult && (
+                        <div className="mt-4 border-t pt-4">
+                            <p className="text-sm font-semibold text-gray-800">AI Suggestion:</p>
+                            <p className="mt-2 text-sm text-gray-600 bg-gray-50 p-3 rounded-md">{aiSuggestionResult}</p>
+                        </div>
+                     )}
                 </div>
             </div>
        </div>

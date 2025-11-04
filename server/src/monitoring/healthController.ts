@@ -1,3 +1,4 @@
+
 // FIX: Import specific types from Express for proper type checking.
 import { Request, Response } from 'express';
 import mongoose from 'mongoose';
