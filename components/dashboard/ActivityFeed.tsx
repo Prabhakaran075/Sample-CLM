@@ -1,6 +1,7 @@
 
 import React from 'react';
 import type { Activity } from '../../types';
+import { CheckCircleIcon, XCircleIcon, InfoCircleIcon, UploadCloudIcon, PaperAirplaneIcon, EyeIcon, PencilSquareIcon } from '../icons/IconComponents';
 
 const mockActivities: Activity[] = [
   {
@@ -33,38 +34,63 @@ const mockActivities: Activity[] = [
   },
 ];
 
+const actionIcons: { [key: string]: { Icon: React.FC<{className?: string}>, color: string } } = {
+  'approved': { Icon: CheckCircleIcon, color: 'bg-green-500' },
+  'uploaded': { Icon: UploadCloudIcon, color: 'bg-blue-500' },
+  'sent': { Icon: PaperAirplaneIcon, color: 'bg-indigo-500' },
+  'rejected': { Icon: XCircleIcon, color: 'bg-red-500' },
+};
+
+
 const ActivityFeed: React.FC = () => {
   return (
-    <div className="flow-root">
-      <ul role="list" className="-mb-8">
-        {mockActivities.map((activity, activityIdx) => (
-          <li key={activity.id}>
-            <div className="relative pb-8">
-              {activityIdx !== mockActivities.length - 1 ? (
-                <span className="absolute top-4 left-4 -ml-px h-full w-0.5 bg-gray-200" aria-hidden="true" />
-              ) : null}
-              <div className="relative flex space-x-3">
-                <div>
-                  <span className="h-8 w-8 rounded-full flex items-center justify-center">
-                    <img className="h-full w-full rounded-full object-cover" src={activity.user.avatarUrl} alt="" />
-                  </span>
+    <div>
+        <div className="mb-4 p-3 bg-primary-50 border-l-4 border-primary-400 rounded-r-lg">
+            <p className="text-sm text-primary-800"><span className="font-bold">AI Summary:</span> 2 contracts are pending your review with an average delay of 1.3 days.</p>
+        </div>
+        <div className="flow-root">
+        <ul role="list" className="-mb-8">
+            {mockActivities.map((activity, activityIdx) => {
+            const actionWord = activity.action.split(' ')[0];
+            const { Icon, color } = actionIcons[actionWord] || { Icon: InfoCircleIcon, color: 'bg-gray-400' };
+
+            return (
+            <li key={activity.id}>
+                <div className="relative pb-8 group">
+                {activityIdx !== mockActivities.length - 1 ? (
+                    <span className="absolute top-5 left-5 -ml-px h-full w-0.5 bg-gray-200" aria-hidden="true" />
+                ) : null}
+                <div className="relative flex items-start space-x-3">
+                    <div className="relative">
+                        <img className="h-10 w-10 rounded-full object-cover ring-2 ring-white" src={activity.user.avatarUrl} alt="" />
+                        <span className={`absolute -bottom-1 -right-1 rounded-full p-0.5 ${color}`}>
+                            <Icon className="h-4 w-4 text-white" />
+                        </span>
+                    </div>
+                    <div className="min-w-0 flex-1">
+                    <div>
+                        <div className="text-sm">
+                        <a href="#" className="font-medium text-gray-900">{activity.user.name}</a>
+                        </div>
+                        <p className="mt-0.5 text-sm text-gray-500">
+                        {activity.action} <span className="font-medium text-gray-700">{activity.target}</span>
+                        </p>
+                    </div>
+                    <div className="mt-1 flex items-center gap-x-2 text-xs leading-5 text-gray-500">
+                        <time>{activity.timestamp}</time>
+                    </div>
+                    </div>
+                     <div className="absolute right-0 top-0 hidden group-hover:flex items-center space-x-1 transition-opacity">
+                        <button className="p-1.5 text-gray-400 hover:text-primary-600 hover:bg-gray-100 rounded-full"><EyeIcon className="w-4 h-4" /></button>
+                        <button className="p-1.5 text-gray-400 hover:text-primary-600 hover:bg-gray-100 rounded-full"><PencilSquareIcon className="w-4 h-4" /></button>
+                    </div>
                 </div>
-                <div className="min-w-0 flex-1 pt-1.5 flex justify-between space-x-4">
-                  <div>
-                    <p className="text-sm text-gray-500">
-                      <span className="font-medium text-gray-900">{activity.user.name}</span> {activity.action}{' '}
-                      <span className="font-medium text-gray-900">{activity.target}</span>
-                    </p>
-                  </div>
-                  <div className="text-right text-sm whitespace-nowrap text-gray-500">
-                    <time>{activity.timestamp}</time>
-                  </div>
                 </div>
-              </div>
-            </div>
-          </li>
-        ))}
-      </ul>
+            </li>
+            );
+            })}
+        </ul>
+        </div>
     </div>
   );
 };

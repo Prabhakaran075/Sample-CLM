@@ -1,6 +1,6 @@
 // FIX: Import specific types from Express for proper type checking.
 import { Request, Response, NextFunction } from 'express';
-import Template from './templateModel';
+import Template from '../templates/templateModel';
 
 /**
  * Controller for the Contract Template Marketplace.

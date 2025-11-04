@@ -14,6 +14,8 @@ import IntegrationHubPage from '../../pages/IntegrationHubPage';
 import AgentsPage from '../../pages/AgentsPage';
 import AIGovernancePage from '../../pages/AIGovernancePage';
 import NegotiationSimulatorPage from '../../pages/NegotiationSimulatorPage';
+import ContractEditPage from '../../pages/ContractEditPage';
+import CreateRecipePage from '../../pages/CreateRecipePage';
 import Assistant from '../assistant/Assistant';
 import UpgradeModal from '../modals/UpgradeModal';
 import type { Page } from '../../App';
@@ -26,6 +28,9 @@ interface DashboardLayoutProps {
   onLogout: () => void;
   selectedContract: Contract | null;
   setSelectedContract: (contract: Contract | null) => void;
+  contractToEdit: Contract | null;
+  onEditContract: (contract: Contract) => void;
+  onSaveContract: (contract: Contract) => void;
   isUpgradeModalOpen: boolean;
   setUpgradeModalOpen: (isOpen: boolean) => void;
 }
@@ -51,6 +56,9 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({
     onLogout, 
     selectedContract,
     setSelectedContract,
+    contractToEdit,
+    onEditContract,
+    onSaveContract,
     isUpgradeModalOpen,
     setUpgradeModalOpen
 }) => {
@@ -76,16 +84,17 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({
             userRole={user.role}
             selectedContract={selectedContract}
             setSelectedContract={setSelectedContract}
+            onEditContract={onEditContract}
             openUpgradeModal={() => setUpgradeModalOpen(true)}
         />;
       case 'approvals':
         return <ApprovalsPage />;
       case 'analytics':
-        return <AnalyticsPage />;
+        return <AnalyticsPage setCurrentPage={setCurrentPage} />;
       case 'templates':
         return <TemplateLibraryPage />;
       case 'automations':
-        return <AutomationHubPage />;
+        return <AutomationHubPage setCurrentPage={setCurrentPage} />;
       case 'plugins':
         return <PluginMarketplacePage />;
       case 'integrations':
@@ -94,6 +103,14 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({
         return <AgentsPage />;
       case 'negotiation':
         return <NegotiationSimulatorPage />;
+       case 'edit-contract':
+        return <ContractEditPage 
+            contract={contractToEdit!} 
+            onSave={onSaveContract} 
+            onCancel={() => setCurrentPage('contracts')}
+        />;
+      case 'create-recipe':
+        return <CreateRecipePage setCurrentPage={setCurrentPage} />;
       case 'admin':
         return <AdminPage />;
       case 'governance':

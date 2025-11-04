@@ -1,7 +1,16 @@
-
 import React from 'react';
+import { motion, Variants } from 'framer-motion';
 import { BarChart, Bar, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from 'recharts';
-import { SearchIcon } from '../components/icons/IconComponents';
+import { SearchIcon, SparklesIcon } from '../components/icons/IconComponents';
+import MetricCard from '../components/analytics/MetricCard';
+import AIAnalyticsSummary from '../components/analytics/AIAnalyticsSummary';
+import AnalyticsToolbar from '../components/analytics/AnalyticsToolbar';
+import type { Page } from '../App';
+
+
+interface AnalyticsPageProps {
+  setCurrentPage: (page: Page) => void;
+}
 
 const contractsByStatusData = [
   { name: 'Draft', value: 12 },
@@ -27,29 +36,89 @@ const riskLevelData = [
 ];
 const RISK_COLORS = ['#34D399', '#FBBF24', '#F87171'];
 
-
-const MetricCard: React.FC<{title: string, value: string, description: string}> = ({title, value, description}) => (
-    <div className="bg-white p-6 rounded-lg shadow">
-        <p className="text-sm font-medium text-gray-500">{title}</p>
-        <p className="text-3xl font-bold text-gray-800 mt-1">{value}</p>
-        <p className="text-sm text-gray-500 mt-2">{description}</p>
+const GraphPlaceholder: React.FC = () => (
+    <div className="w-full h-full flex flex-col items-center justify-center space-y-4 p-4">
+        <div className="flex items-center space-x-8">
+            <div className="w-16 h-16 bg-blue-100 rounded-full animate-pulse"></div>
+            <div className="w-24 h-1 bg-gray-200 rounded-full"></div>
+            <div className="w-20 h-20 bg-primary-100 rounded-full animate-pulse"></div>
+        </div>
+         <div className="flex items-center space-x-6">
+            <div className="w-20 h-1 bg-gray-200 rounded-full -rotate-12"></div>
+            <div className="w-12 h-12 bg-gray-100 rounded-full animate-pulse"></div>
+             <div className="w-16 h-1 bg-gray-200 rounded-full rotate-12"></div>
+        </div>
+        <div className="flex items-center space-x-10">
+            <div className="w-12 h-12 bg-indigo-100 rounded-full animate-pulse"></div>
+            <div className="w-28 h-1 bg-gray-200 rounded-full"></div>
+            <div className="w-14 h-14 bg-gray-100 rounded-full animate-pulse"></div>
+        </div>
+        <p className="text-sm font-medium text-gray-500 mt-4">Graph visualization coming soon</p>
     </div>
 );
 
 
-const AnalyticsPage: React.FC = () => {
+const AnalyticsPage: React.FC<AnalyticsPageProps> = ({ setCurrentPage }) => {
+  const containerVariants: Variants = {
+    hidden: { opacity: 0 },
+    visible: { opacity: 1, transition: { staggerChildren: 0.1 } },
+  };
+
+  const itemVariants: Variants = {
+    hidden: { y: 20, opacity: 0 },
+    visible: { y: 0, opacity: 1, transition: { type: 'spring', stiffness: 100 } },
+  };
+  
   return (
-    <div>
-      <h2 className="text-2xl font-semibold text-gray-800 mb-6">Analytics & Insights</h2>
+    <motion.div
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+        className="space-y-6"
+    >
+      <motion.div variants={itemVariants}>
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-center">
+            <div>
+                <h2 className="text-2xl font-semibold text-gray-800">Analytics & Insights</h2>
+                <p className="text-gray-500 mt-1">Track trends and gain visibility into your contract ecosystem.</p>
+            </div>
+            <AnalyticsToolbar />
+        </div>
+      </motion.div>
+
+      <motion.div variants={itemVariants}>
+        <AIAnalyticsSummary />
+      </motion.div>
       
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-          <MetricCard title="Avg. Signing Time" value="2.4 Days" description="From creation to final signature" />
-          <MetricCard title="Total Active Contracts" value="151" description="Excludes drafts and expired" />
-          <MetricCard title="Expiring in 90 Days" value="14" description="Contracts needing attention soon" />
-      </div>
+      <motion.div variants={itemVariants} className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <MetricCard 
+            title="Avg. Signing Time" 
+            value="2.4 Days" 
+            description="From creation to final signature"
+            trendValue="12%"
+            trendDirection="increase"
+            onClick={() => setCurrentPage('contracts')}
+          />
+          <MetricCard 
+            title="Total Active Contracts" 
+            value="151" 
+            description="Excludes drafts and expired"
+            trendValue="3%"
+            trendDirection="increase"
+            onClick={() => setCurrentPage('contracts')}
+          />
+          <MetricCard 
+            title="Expiring in 90 Days" 
+            value="14" 
+            description="Contracts needing attention soon"
+            trendValue="5%"
+            trendDirection="decrease"
+            onClick={() => setCurrentPage('contracts')}
+          />
+      </motion.div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <div className="bg-white p-6 rounded-lg shadow">
+        <motion.div variants={itemVariants} className="bg-white p-6 rounded-lg shadow">
             <h3 className="text-lg font-semibold text-gray-800 mb-4">Contracts Signed / Month</h3>
             <div style={{ width: '100%', height: 300 }}>
                  <ResponsiveContainer>
@@ -64,8 +133,8 @@ const AnalyticsPage: React.FC = () => {
                     </BarChart>
                 </ResponsiveContainer>
             </div>
-        </div>
-         <div className="bg-white p-6 rounded-lg shadow">
+        </motion.div>
+         <motion.div variants={itemVariants} className="bg-white p-6 rounded-lg shadow">
             <h3 className="text-lg font-semibold text-gray-800 mb-4">Contracts by Status</h3>
             <div style={{ width: '100%', height: 300 }}>
                 <ResponsiveContainer>
@@ -80,10 +149,10 @@ const AnalyticsPage: React.FC = () => {
                     </PieChart>
                 </ResponsiveContainer>
             </div>
-        </div>
+        </motion.div>
       </div>
        <div className="mt-6 grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <div className="bg-white p-6 rounded-lg shadow">
+        <motion.div variants={itemVariants} className="bg-white p-6 rounded-lg shadow">
             <h3 className="text-lg font-semibold text-gray-800 mb-4">Contract Risk Levels</h3>
             <div style={{ width: '100%', height: 300 }}>
                 <ResponsiveContainer>
@@ -98,8 +167,8 @@ const AnalyticsPage: React.FC = () => {
                     </PieChart>
                 </ResponsiveContainer>
             </div>
-        </div>
-        <div className="bg-white p-6 rounded-lg shadow flex flex-col">
+        </motion.div>
+        <motion.div variants={itemVariants} className="bg-white p-6 rounded-lg shadow flex flex-col">
           <h3 className="text-lg font-semibold text-gray-800">Contract Knowledge Graph</h3>
           <p className="text-sm text-gray-500 mt-1">Ask questions about relationships between contracts, parties, and clauses.</p>
           <div className="mt-4 relative">
@@ -112,13 +181,12 @@ const AnalyticsPage: React.FC = () => {
                   className="block w-full bg-gray-50 border border-gray-300 rounded-md py-2 pl-10 pr-3 text-sm focus:outline-none focus:border-primary-500 focus:ring-primary-500"
               />
           </div>
-          <div className="flex-grow mt-4 border border-dashed rounded-lg flex items-center justify-center text-gray-400">
-             {/* TODO: Implement D3.js visualization */}
-             Graph Visualization Placeholder
+          <div className="flex-grow mt-4 border border-dashed rounded-lg bg-gray-50/50">
+             <GraphPlaceholder />
           </div>
+      </motion.div>
       </div>
-      </div>
-    </div>
+    </motion.div>
   );
 };
 

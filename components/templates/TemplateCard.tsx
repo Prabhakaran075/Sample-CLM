@@ -5,6 +5,7 @@ import { ContractsIcon } from '../icons/IconComponents';
 
 interface TemplateCardProps {
     template: Template;
+    onUseTemplate: (template: Template) => void;
 }
 
 const categoryColors: Record<Template['category'], string> = {
@@ -14,7 +15,7 @@ const categoryColors: Record<Template['category'], string> = {
     'Finance': 'bg-yellow-100 text-yellow-800',
 };
 
-const TemplateCard: React.FC<TemplateCardProps> = ({ template }) => {
+const TemplateCard: React.FC<TemplateCardProps> = ({ template, onUseTemplate }) => {
     return (
         <div className="bg-white rounded-lg shadow border border-gray-200 hover:shadow-lg transition-shadow duration-300 flex flex-col">
             <div className="p-6 flex-grow">
@@ -35,7 +36,7 @@ const TemplateCard: React.FC<TemplateCardProps> = ({ template }) => {
                      <p className="text-xs text-gray-500">By: <span className="font-semibold">{template.author}</span></p>
                 </div>
                 <button 
-                    onClick={() => alert(`Creating a new contract from the "${template.title}" template.`)}
+                    onClick={() => onUseTemplate(template)}
                     className="font-semibold text-sm text-primary-600 hover:text-primary-800"
                 >
                     Use Template &rarr;

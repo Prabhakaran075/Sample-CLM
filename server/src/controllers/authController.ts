@@ -1,5 +1,5 @@
-
-import express from 'express';
+// FIX: Import specific types from Express for proper type checking.
+import { Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
 
 // Mocks - replace with actual database logic
@@ -8,7 +8,7 @@ import { UserRole } from '../models/User';
 // @desc    Authenticate user & get token (mock implementation)
 // @route   POST /api/auth/login
 // @access  Public
-export const loginUser = (req: express.Request, res: express.Response) => {
+export const loginUser = (req: Request, res: Response) => {
   const { email, password } = req.body;
 
   // TODO: Replace this with a real database lookup and password check (e.g., using bcrypt)

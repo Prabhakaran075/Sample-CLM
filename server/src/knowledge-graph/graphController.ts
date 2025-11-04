@@ -1,5 +1,5 @@
-
-import express from 'express';
+// FIX: Import specific types from Express for proper type checking.
+import { Request, Response, NextFunction } from 'express';
 // In a real implementation, you might use a graph database library like neo4j-driver.
 
 class GraphController {
@@ -8,7 +8,7 @@ class GraphController {
      * @route   POST /api/ai/graph/query
      * @access  Private
      */
-    public static async queryGraph(req: express.Request, res: express.Response, next: express.NextFunction): Promise<void> {
+    public static async queryGraph(req: Request, res: Response, next: NextFunction): Promise<void> {
         try {
             const { query } = req.body;
             const tenantId = req.tenantId;

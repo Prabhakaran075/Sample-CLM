@@ -1,12 +1,12 @@
-
-import express from 'express';
+// FIX: Import specific types from Express for proper type checking.
+import { Request, Response } from 'express';
 import mongoose from 'mongoose';
 
 /**
  * Checks the health of the application, including the database connection.
  * @route GET /api/health
  */
-export const checkHealth = (req: express.Request, res: express.Response) => {
+export const checkHealth = (req: Request, res: Response) => {
   const healthStatus = {
     status: 'ok',
     message: 'Server is healthy',

@@ -1,5 +1,5 @@
-
-import express from 'express';
+// FIX: Import specific types from Express for proper type checking.
+import { Request, Response } from 'express';
 
 /**
  * This controller will manage webhook subscriptions for tenants.
@@ -11,7 +11,7 @@ class WebhooksController {
    * @route   POST /api/webhooks/subscribe
    * @access  Private (Org Admin)
    */
-  public static createSubscription(req: express.Request, res: express.Response): void {
+  public static createSubscription(req: Request, res: Response): void {
     // TODO: Implementation
     // - Validate the target URL.
     // - Store the webhook URL and subscribed events against the tenantId.
@@ -24,7 +24,7 @@ class WebhooksController {
    * @route   GET /api/webhooks/subscriptions
    * @access  Private (Org Admin)
    */
-  public static listSubscriptions(req: express.Request, res: express.Response): void {
+  public static listSubscriptions(req: Request, res: Response): void {
      // TODO: Implementation
     res.status(200).json({ message: 'TODO: List webhook subscriptions.' });
   }

@@ -29,8 +29,8 @@ const ContractsChart: React.FC = () => {
             }}
           />
           <Legend wrapperStyle={{fontSize: "14px"}}/>
-          <Bar dataKey="draft" stackId="a" fill="#93c5fd" name="Draft" radius={[4, 4, 0, 0]} />
-          <Bar dataKey="signed" stackId="a" fill="#3b82f6" name="Signed" radius={[4, 4, 0, 0]} />
+          <Bar dataKey="draft" stackId="a" fill="#93c5fd" name="Draft" radius={[4, 4, 0, 0]} isAnimationActive={true} />
+          <Bar dataKey="signed" stackId="a" fill="#3b82f6" name="Signed" radius={[4, 4, 0, 0]} isAnimationActive={true} />
         </BarChart>
       </ResponsiveContainer>
     </div>

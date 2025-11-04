@@ -1,5 +1,5 @@
-
-import express from 'express';
+// FIX: Import specific types from Express for proper type checking.
+import { Request, Response, NextFunction } from 'express';
 // import Plugin from '../models/Plugin';
 
 const mockPlugins = [
@@ -14,7 +14,7 @@ class PluginController {
      * @route   GET /api/plugins
      * @access  Private
      */
-    public static async getPlugins(req: express.Request, res: express.Response, next: express.NextFunction): Promise<void> {
+    public static async getPlugins(req: Request, res: Response, next: NextFunction): Promise<void> {
         try {
             // TODO: Fetch published plugins from the database
             // const plugins = await Plugin.find({ isPublished: true });

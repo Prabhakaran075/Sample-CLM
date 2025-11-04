@@ -1,5 +1,5 @@
-
-import express, { Request, Response, NextFunction } from 'express';
+// FIX: Import specific types from Express for proper type checking.
+import { Request, Response, NextFunction } from 'express';
 // import LLMService from '../llm/llmService';
 // import Negotiation from '../models/Negotiation';
 

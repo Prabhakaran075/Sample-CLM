@@ -1,5 +1,5 @@
-
-import express from 'express';
+// FIX: Import specific types from Express for proper type checking.
+import { Request, Response, NextFunction } from 'express';
 
 /**
  * In a real multi-tenant app with subdomains (e.g., acme.simpleclm.app),
@@ -8,7 +8,7 @@ import express from 'express';
  * 
  * For this MVP, we rely on the tenantId being embedded in the JWT.
  */
-export const resolveTenantFromSubdomain = (req: express.Request, res: express.Response, next: express.NextFunction) => {
+export const resolveTenantFromSubdomain = (req: Request, res: Response, next: NextFunction) => {
     const host = req.headers.host || '';
     const subdomain = host.split('.')[0];
     

@@ -1,12 +1,12 @@
-
-import express from 'express';
+// FIX: Import specific types from Express for proper type checking.
+import { Request, Response, NextFunction } from 'express';
 
 /**
  * Placeholder middleware for tenant-based API rate limiting and AI token accounting.
  * In a real application, this would connect to Redis or a similar service to
  * track usage against the tenant's subscription plan.
  */
-export const aiUsageLimiter = (req: express.Request, res: express.Response, next: express.NextFunction) => {
+export const aiUsageLimiter = (req: Request, res: Response, next: NextFunction) => {
     const tenantId = req.tenantId; // from protect middleware
 
     if (!tenantId) {

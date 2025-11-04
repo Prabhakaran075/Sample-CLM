@@ -1,5 +1,5 @@
-
-import express from 'express';
+// FIX: Import specific types from Express for proper type checking.
+import { Request, Response, NextFunction } from 'express';
 import LLMService from '../llm/llmService';
 
 /**
@@ -12,7 +12,7 @@ class CopilotController {
    * @route   POST /api/copilot/query
    * @access  Private
    */
-  public static async processQuery(req: express.Request, res: express.Response, next: express.NextFunction): Promise<void> {
+  public static async processQuery(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
       const { query, contractContext } = req.body;
       // FIX: Get tenantId from authenticated request.

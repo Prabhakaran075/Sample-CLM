@@ -7,7 +7,7 @@ import { authorize } from '../roles/roleMiddleware';
 const router = express.Router();
 
 // Apply the 'protect' middleware to all routes in this file
-// router.use(protect);
+router.use(protect);
 
 // @route   GET /api/contracts
 // @desc    Get all contracts for the user's tenant

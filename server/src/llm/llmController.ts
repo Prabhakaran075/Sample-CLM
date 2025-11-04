@@ -1,5 +1,5 @@
-
-import express from 'express';
+// FIX: Import specific types from Express for proper type checking.
+import { Request, Response, NextFunction } from 'express';
 import LLMService from './llmService';
 
 /**
@@ -12,7 +12,7 @@ class LLMController {
    * @route   POST /api/ai/summarize
    * @access  Private
    */
-  public static async summarizeContract(req: express.Request, res: express.Response, next: express.NextFunction): Promise<void> {
+  public static async summarizeContract(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
       const { contractText } = req.body;
       // FIX: Get tenantId from authenticated request.
@@ -41,7 +41,7 @@ class LLMController {
    * @route   POST /api/ai/extract-clauses
    * @access  Private
    */
-  public static async extractClauses(req: express.Request, res: express.Response, next: express.NextFunction): Promise<void> {
+  public static async extractClauses(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
       const { contractText } = req.body;
       const tenantId = req.tenantId;
@@ -66,7 +66,7 @@ class LLMController {
    * @route   POST /api/ai/rewrite
    * @access  Private
    */
-  public static async rewriteClause(req: express.Request, res: express.Response, next: express.NextFunction): Promise<void> {
+  public static async rewriteClause(req: Request, res: Response, next: NextFunction): Promise<void> {
      try {
       const { clauseText } = req.body;
       const tenantId = req.tenantId;
@@ -91,7 +91,7 @@ class LLMController {
    * @route   POST /api/ai/compare
    * @access  Private
    */
-  public static async compareVersions(req: express.Request, res: express.Response, next: express.NextFunction): Promise<void> {
+  public static async compareVersions(req: Request, res: Response, next: NextFunction): Promise<void> {
      try {
       const { textV1, textV2 } = req.body;
       const tenantId = req.tenantId;

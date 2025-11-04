@@ -1,9 +1,9 @@
-
-import React from 'react';
+import React, { useState } from 'react';
 import type { AutomationRecipe } from '../types';
 import RecipeCard from '../components/automations/RecipeCard';
+import type { Page } from '../App';
 
-const mockRecipes: AutomationRecipe[] = [
+const mockRecipesData: AutomationRecipe[] = [
   {
     id: 'rec-001',
     title: 'Auto-send for Review on Upload',
@@ -38,7 +38,21 @@ const mockRecipes: AutomationRecipe[] = [
   },
 ];
 
-const AutomationHubPage: React.FC = () => {
+interface AutomationHubPageProps {
+    setCurrentPage: (page: Page) => void;
+}
+
+const AutomationHubPage: React.FC<AutomationHubPageProps> = ({ setCurrentPage }) => {
+  const [recipes, setRecipes] = useState<AutomationRecipe[]>(mockRecipesData);
+
+  const handleToggleRecipe = (recipeId: string) => {
+    setRecipes(prevRecipes =>
+      prevRecipes.map(recipe =>
+        recipe.id === recipeId ? { ...recipe, isEnabled: !recipe.isEnabled } : recipe
+      )
+    );
+  };
+
   return (
     <div>
       <div className="mb-8">
@@ -49,12 +63,14 @@ const AutomationHubPage: React.FC = () => {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {mockRecipes.map(recipe => (
-          <RecipeCard key={recipe.id} recipe={recipe} />
+        {recipes.map(recipe => (
+          <RecipeCard key={recipe.id} recipe={recipe} onToggle={handleToggleRecipe} />
         ))}
       </div>
        <div className="mt-10 text-center">
-            <button className="bg-primary-600 text-white font-semibold py-2 px-6 rounded-lg shadow hover:bg-primary-700">
+            <button 
+              onClick={() => setCurrentPage('create-recipe')}
+              className="bg-primary-600 text-white font-semibold py-2 px-6 rounded-lg shadow hover:bg-primary-700">
                 Create Custom Recipe
             </button>
         </div>

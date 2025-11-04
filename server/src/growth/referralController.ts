@@ -1,5 +1,5 @@
-
-import express from 'express';
+// FIX: Import specific types from Express for proper type checking.
+import { Request, Response } from 'express';
 
 /**
  * Controller for managing the user referral program.
@@ -11,7 +11,7 @@ class ReferralController {
    * @route   GET /api/referrals/status
    * @access  Private
    */
-  public static getReferralStatus(req: express.Request, res: express.Response): void {
+  public static getReferralStatus(req: Request, res: Response): void {
     // TODO: Implementation
     // - Generate or retrieve the unique referral code for the user.
     // - Fetch statistics (e.g., number of sign-ups, credits earned).
@@ -27,7 +27,7 @@ class ReferralController {
    * @route   POST /api/referrals/signup
    * @access  Public
    */
-  public static handleReferredSignup(req: express.Request, res: express.Response): void {
+  public static handleReferredSignup(req: Request, res: Response): void {
     const { referralCode, newUserEmail } = req.body;
     // TODO: Implementation
     // - Validate the referralCode.

@@ -4,6 +4,9 @@ import { CpuChipIcon, ClockIcon, CheckCircleIcon, XCircleIcon } from '../icons/I
 
 interface AgentCardProps {
   agent: Agent;
+  isPaused: boolean;
+  onPauseToggle: () => void;
+  onViewLogs: () => void;
 }
 
 const statusConfig: Record<AgentStatus, { color: string; bgColor: string; icon: React.FC<{className?:string}>}> = {
@@ -20,8 +23,11 @@ const typeColors: Record<AgentType, string> = {
     Negotiation: 'bg-purple-100 text-purple-800',
 }
 
-const AgentCard: React.FC<AgentCardProps> = ({ agent }) => {
-  const { icon: StatusIcon, color: statusColor, bgColor: statusBgColor } = statusConfig[agent.status];
+const AgentCard: React.FC<AgentCardProps> = ({ agent, isPaused, onPauseToggle, onViewLogs }) => {
+  // The current displayed status is derived from the interactive `isPaused` state,
+  // falling back to the agent's initial status.
+  const currentStatus = isPaused ? 'Paused' : agent.status === 'Paused' ? 'Active' : agent.status;
+  const { icon: StatusIcon, color: statusColor, bgColor: statusBgColor } = statusConfig[currentStatus];
 
   return (
     <div className="bg-white rounded-lg shadow border border-gray-200 p-6">
@@ -38,7 +44,7 @@ const AgentCard: React.FC<AgentCardProps> = ({ agent }) => {
             </span>
             <span className={`flex items-center px-2.5 py-0.5 text-xs font-medium rounded-full ${statusBgColor} ${statusColor}`}>
               <StatusIcon className="w-3 h-3 mr-1.5" />
-              {agent.status}
+              {currentStatus}
             </span>
         </div>
       </div>
@@ -55,11 +61,11 @@ const AgentCard: React.FC<AgentCardProps> = ({ agent }) => {
           Last activity: {agent.lastActivity}
         </p>
         <div className="flex items-center space-x-2">
-          <button className="text-xs font-semibold text-gray-700 bg-gray-100 hover:bg-gray-200 px-3 py-1 rounded-md">
+          <button onClick={onViewLogs} className="text-xs font-semibold text-gray-700 bg-gray-100 hover:bg-gray-200 px-3 py-1 rounded-md">
             View Logs
           </button>
-          <button className="text-xs font-semibold text-white bg-primary-600 hover:bg-primary-700 px-3 py-1 rounded-md">
-            {agent.status === 'Paused' ? 'Resume' : 'Pause'}
+          <button onClick={onPauseToggle} className="text-xs font-semibold text-white bg-primary-600 hover:bg-primary-700 px-3 py-1 rounded-md">
+            {isPaused ? 'Resume' : 'Pause'}
           </button>
         </div>
       </div>

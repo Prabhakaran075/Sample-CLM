@@ -1,5 +1,5 @@
-
-import express from 'express';
+// FIX: Import specific types from Express for proper type checking.
+import { Request, Response, NextFunction } from 'express';
 import permissions from './permissions.json';
 
 type UserRole = keyof typeof permissions;
@@ -12,7 +12,7 @@ type UserRole = keyof typeof permissions;
  * @param requiredPermission The permission string required to access the route (e.g., 'contracts:create').
  */
 export const authorize = (requiredPermission: string) => {
-  return (req: express.Request, res: express.Response, next: express.NextFunction) => {
+  return (req: Request, res: Response, next: NextFunction) => {
     // Mocking user role for demonstration, as 'protect' middleware uses a mock user.
     // In a real implementation, req.user.role would come from the database via the token.
     const userRole: UserRole = req.user?.role || 'VIEWER'; 

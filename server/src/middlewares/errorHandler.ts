@@ -1,7 +1,7 @@
+// FIX: Import specific types from Express for proper type checking.
+import { Request, Response, NextFunction, ErrorRequestHandler } from 'express';
 
-import express from 'express';
-
-const errorHandler: express.ErrorRequestHandler = (err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
+const errorHandler: ErrorRequestHandler = (err: any, req: Request, res: Response, next: NextFunction) => {
   console.error(err.stack);
 
   const statusCode = err.statusCode || 500;

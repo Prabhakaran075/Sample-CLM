@@ -27,7 +27,7 @@ const StatCard: React.FC<StatCardProps> = ({ title, value, change, changeType, c
   const textColor = color === 'red' ? 'text-red-600' : 'text-primary-600';
 
   return (
-    <div className="bg-white p-6 rounded-lg shadow">
+    <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-xl hover:scale-105 transition-all duration-300">
       <div className="flex items-center justify-between">
         <div>
           <p className="text-sm font-medium text-gray-500">{title}</p>
